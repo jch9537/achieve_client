@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 
 import api from "../../api";
+import { Redirect } from "react-router-dom";
 
 class SignIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      isLogIn: false
     };
   }
 
@@ -29,28 +31,37 @@ class SignIn extends Component {
       email: this.state.email,
       password: this.state.password
     };
-    api("user/Signin", "POST", body).then(data => console.log("된다", data));
+    api("user/Signin", "POST", body).then(data => {
+      if (data.message === "로그인완료") {
+        this.setState({ isLogIn: !this.state.isLogIn });
+        console.log("체크", this.state);
+      }
+    });
   };
 
   render() {
     console.log("사인인 스테이트", this.state);
-    //만약에 결과가 맞으면 this.props.history.push(/Main)
-    return (
-      <div>
-        <h2>SignIn</h2>
-        <input
-          type="email"
-          placeholder="email"
-          onChange={e => this.emailCheck(e)}
-        />
-        <input
-          type="password"
-          placeholder="password"
-          onChange={e => this.passwordCheck(e)}
-        />
-        <button onClick={this.submitSignIn}>SignIn</button>
-      </div>
-    );
+    if (this.state.isLogIn) {
+      return <Redirect to={`/main/${this.state.email}`} />;
+    } else {
+      //만약에 결과가 맞으면 this.props.history.push(/Main)
+      return (
+        <div style={{ backgroundColor: "beige", padding: 10 }}>
+          <h2>SignIn</h2>
+          <input
+            type="email"
+            placeholder="email"
+            onChange={e => this.emailCheck(e)}
+          />
+          <input
+            type="password"
+            placeholder="password"
+            onChange={e => this.passwordCheck(e)}
+          />
+          <button onClick={this.submitSignIn}>SignIn</button>
+        </div>
+      );
+    }
   }
 }
 

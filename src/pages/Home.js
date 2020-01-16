@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
-    <div>
+    <div style={{ backgroundColor: "pink", padding: 10 }}>
       <h2>Home</h2>
       <div>
         <Link to="/signin">SignIn</Link>

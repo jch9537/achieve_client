@@ -43,7 +43,7 @@ class SignUp extends Component {
     console.log("사인업 스테이트", this.state);
     //만약에 결과가 맞으면 this.props.history.push(/Main)
     return (
-      <div>
+      <div style={{ backgroundColor: "beige", padding: 10 }}>
         <h2>SignUp</h2>
         <input
           type="text"
