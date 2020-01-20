@@ -14,37 +14,42 @@ class SignIn extends Component {
   }
 
   emailCheck = e => {
-    console.log("email", e.target.value);
-    let email = e.target.value;
-    this.setState({ email: email });
+    // console.log("로그인 이메일: ", e.target.value);
+    let __email = e.target.value;
+    this.setState({ email: __email });
   };
 
   passwordCheck = e => {
-    console.log("password", e.target.value);
-    let password = e.target.value;
-    this.setState({ password: password });
+    // console.log("로그인 비밀번호: ", e.target.value);
+    let __password = e.target.value;
+    this.setState({ password: __password });
   };
 
   submitSignIn = () => {
-    console.log(this.state);
+    const { email, password, isLogIn } = this.state;
+
     let body = {
-      email: this.state.email,
-      password: this.state.password
+      email: email,
+      password: password
     };
-    api("user/Signin", "POST", body).then(data => {
+    api("/user/signin", "POST", body).then(data => {
       if (data.message === "로그인완료") {
-        this.setState({ isLogIn: !this.state.isLogIn });
+        this.setState({ isLogIn: !isLogIn });
         console.log("체크", this.state);
       }
     });
   };
 
   render() {
+    const { isLogIn, email } = this.state;
     console.log("사인인 스테이트", this.state);
-    if (this.state.isLogIn) {
-      return <Redirect to={`/main/${this.state.email}`} />;
-    } else {
+    console.log("사인인 프롭", this.props);
+
+    if (isLogIn) {
+      alert("로그인 완료");
+      return <Redirect to={`/main/${email}`} />;
       //만약에 결과가 맞으면 this.props.history.push(/Main)
+    } else {
       return (
         <div style={{ backgroundColor: "beige", padding: 10 }}>
           <h2>SignIn</h2>
