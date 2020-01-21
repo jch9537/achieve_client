@@ -18,7 +18,7 @@ class Header extends Component {
     console.log("헤더스테이트", this.state);
     console.log("헤더프롭", this.props);
     return (
-      <div style={{ backgroundColor: "orange", padding: 10 }}>
+      <div style={{ backgroundColor: "#ddceed", padding: 10 }}>
         <div>
           <h2>Header</h2>
           <div>

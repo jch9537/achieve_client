@@ -8,6 +8,7 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      user_id: this.props.match.params.user_id,
       boards: ["achieve", "todolist"],
       newBoard: "",
       isCheckCreateBoard: false
@@ -72,7 +73,7 @@ class Main extends Component {
   };
 
   deleteBoard = board => {
-    console.log(board);
+    // console.log(board);
     // 해당보드네임이나 아이디를 서버로 보낸뒤에 db에서 삭제를 한 후 db에서 전체 board정보를 가져와 setState해줘 렌더
     let body = {
       board_name: board
@@ -103,7 +104,7 @@ class Main extends Component {
         <div>
           <Header back={this.props} />
         </div>
-        <div style={{ backgroundColor: "coral", padding: 10 }}>
+        <div style={{ backgroundColor: "#a1c3e2", padding: 10 }}>
           <h2>Main</h2>
           <div>
             <input

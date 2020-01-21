@@ -1,7 +1,7 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 
 import api from "../../api";
-import { Redirect } from "react-router-dom";
 
 class SignIn extends Component {
   constructor(props) {
@@ -13,13 +13,13 @@ class SignIn extends Component {
     };
   }
 
-  emailCheck = e => {
+  writeEmail = e => {
     // console.log("로그인 이메일: ", e.target.value);
     let __email = e.target.value;
     this.setState({ email: __email });
   };
 
-  passwordCheck = e => {
+  writePassword = e => {
     // console.log("로그인 비밀번호: ", e.target.value);
     let __password = e.target.value;
     this.setState({ password: __password });
@@ -35,15 +35,15 @@ class SignIn extends Component {
     api("/user/signin", "POST", body).then(data => {
       if (data.message === "로그인완료") {
         this.setState({ isLogIn: !isLogIn });
-        console.log("체크", this.state);
+        // console.log("체크", this.state);
       }
     });
   };
 
   render() {
     const { isLogIn, email } = this.state;
-    console.log("사인인 스테이트", this.state);
-    console.log("사인인 프롭", this.props);
+    // console.log("사인인 스테이트", this.state);
+    // console.log("사인인 프롭", this.props);
 
     if (isLogIn) {
       alert("로그인 완료");
@@ -53,17 +53,22 @@ class SignIn extends Component {
       return (
         <div style={{ backgroundColor: "beige", padding: 10 }}>
           <h2>SignIn</h2>
-          <input
-            type="email"
-            placeholder="email"
-            onChange={e => this.emailCheck(e)}
-          />
-          <input
-            type="password"
-            placeholder="password"
-            onChange={e => this.passwordCheck(e)}
-          />
-          <button onClick={this.submitSignIn}>SignIn</button>
+
+          <div>
+            <input
+              type="email"
+              placeholder="Email"
+              onChange={e => this.writeEmail(e)}
+            />
+          </div>
+          <div>
+            <input
+              type="password"
+              placeholder="Password"
+              onChange={e => this.writePassword(e)}
+            />
+          </div>
+          <button onClick={this.submitSignIn}>로그인</button>
         </div>
       );
     }

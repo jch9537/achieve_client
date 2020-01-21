@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
 
 import api from "../../api";
 
@@ -10,77 +9,132 @@ class SignUp extends Component {
       name: "",
       email: "",
       password: "",
-      completeSignUp: false
+      passwordCheck: "",
+      isConfirmPassword: false
     };
   }
-  nameCheck = e => {
+  createName = e => {
     // console.log("사인업 이름: ", e.target.value);
     let __name = e.target.value;
     this.setState({ name: __name });
   };
 
-  emailCheck = e => {
+  createEmail = e => {
     // console.log("사인업 이메일: ", e.target.value);
     let __email = e.target.value;
     this.setState({ email: __email });
   };
 
-  passwordCheck = e => {
+  createPassword = e => {
     // console.log("사인업 비밀번호: ", e.target.value);
     let __password = e.target.value;
     this.setState({ password: __password });
   };
 
-  submitSignUp = () => {
-    const { name, email, password, completeSignUp } = this.state;
+  // 비번확인 함수만들기
+  repeatPassword = e => {
+    let __passwordCheck = e.target.value;
+    console.log(__passwordCheck);
+    this.setState({ passwordCheck: __passwordCheck });
+  };
 
-    console.log(this.state);
-    let body = {
-      name: name,
-      email: email,
-      password: password
-    };
-    api("/user/signup", "POST", body).then(data => {
-      if (data.message === "회원가입완료") {
-        //회원가입완료 말고 상태체크(status)나 다른걸로생각해보기
-        this.setState({ completeSignUp: !completeSignUp });
+  checkWritePassword = () => {
+    if (this.state.password) {
+      if (this.state.passwordCheck) {
+        this.setState({ isConfirmPassword: !this.state.isConfirmPassword });
+      } else {
+        alert("비밀번호 확인을 해주세요");
       }
-    });
+    } else {
+      alert("비밀번호를 입력해주세요");
+    }
+  };
+
+  matchPassword = () => {
+    if (this.state.password === this.state.passwordCheck) {
+      return <span>비밀번호가 일치합니다.</span>;
+    } else {
+      return <span>비밀번호가 일치하지 않습니다.</span>;
+    }
+  };
+
+  submitSignUp = () => {
+    const {
+      name,
+      email,
+      password,
+      passwordCheck,
+      isConfirmPassword
+    } = this.state;
+    if (!(name && email && password && passwordCheck)) {
+      alert("가입정보를 모두 입력해주세요.");
+    } else if (!isConfirmPassword) {
+      alert("확인버튼을 눌러 비밀번호 일치여부를 확인해주세요");
+    } else if (password !== passwordCheck) {
+      alert("비밀번호가 일치하지 않습니다.");
+    } else {
+      let body = {
+        user_name: name,
+        email: email,
+        password: password
+      };
+      api("/user/signup", "POST", body).then(res => {
+        if (res.message === "회원가입완료") {
+          console.log("회원가입확인", res);
+          alert(res.message);
+          //회원가입완료 말고 상태체크(status)나 다른걸로생각해보기
+          this.props.handleToggle();
+        }
+      });
+    }
   };
 
   render() {
     //만약에 결과가 맞으면 this.props.history.push(/Main) - 이거 안됨 확인
-    const { completeSignUp } = this.state;
+    const { isConfirmPassword } = this.state;
     // console.log("사인업 스테이트", this.state);
     // console.log("사인업 프롭", this.props);
 
-    if (completeSignUp) {
-      alert("회원가입완료");
-      return <Redirect to="/signin" />;
-    } else {
-      return (
-        <div style={{ backgroundColor: "beige", padding: 10 }}>
-          <h2>SignUp</h2>
+    return (
+      <div style={{ backgroundColor: "beige", padding: 10 }}>
+        <h2>SignUp</h2>
+
+        <div>
           <input
             type="text"
-            placeholder="name"
-            onChange={e => this.emailCheck(e)}
+            placeholder="Name"
+            onChange={e => this.createName(e)}
           />
+        </div>
+        <div>
           <input
             type="email"
-            placeholder="email"
-            onChange={e => this.emailCheck(e)}
+            placeholder="Email"
+            onChange={e => this.createEmail(e)}
           />
+        </div>
+        <div>
           <input
             type="password"
-            placeholder="password"
-            onChange={e => this.passwordCheck(e)}
+            placeholder="Password"
+            onChange={e => this.createPassword(e)}
           />
-          <button onClick={this.submitSignUp}>SignUp</button>
         </div>
-      );
-    }
+        <div>
+          <input
+            type="password"
+            placeholder="Check Password"
+            onChange={e => this.repeatPassword(e)}
+          />
+          <button onClick={this.checkWritePassword}>확인</button>
+          {isConfirmPassword ? this.matchPassword() : null}
+        </div>
+
+        <button onClick={this.submitSignUp}>SignUp</button>
+      </div>
+    );
   }
+  // }
 }
 
 export default SignUp;
