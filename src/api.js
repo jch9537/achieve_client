@@ -12,12 +12,14 @@ function api(url, method, body) {
     })
       .then(res => res.json())
       .then(res => {
+        console.log(res);
         if (res.error) {
           return Promise.reject(res.error);
         } else {
           return res;
         }
       });
+    //에러캐치 추가
   } else {
     return fetch(`${server}${url}`, {
       method,
@@ -30,12 +32,14 @@ function api(url, method, body) {
     })
       .then(res => res.json())
       .then(res => {
+        console.log("응답 ------------------------", res);
         if (res.error) {
           return Promise.reject(res.error);
         } else {
           return res;
         }
       });
+    //에러캐치추가.catch(..)
   }
 }
 

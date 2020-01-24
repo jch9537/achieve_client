@@ -27,17 +27,30 @@ class SignIn extends Component {
 
   submitSignIn = () => {
     const { email, password, isLogIn } = this.state;
-
-    let body = {
-      email: email,
-      password: password
-    };
-    api("/user/signin", "POST", body).then(data => {
-      if (data.message === "로그인완료") {
-        this.setState({ isLogIn: !isLogIn });
-        // console.log("체크", this.state);
+    if (!email) {
+      if (!password) {
+        alert("로그인정보를 입력해주세요");
+      } else {
+        alert("email을 입력해 주세요");
       }
-    });
+    } else if (!password) {
+      if (!email) {
+        alert("로그인정보를 입력해주세요");
+      } else {
+        alert("비밀번호를 입력해 주세요");
+      }
+    } else {
+      let body = {
+        email: email,
+        password: password
+      };
+      api("/user/signin", "POST", body).then(res => {
+        if (res.message === "로그인 완료") {
+          this.setState({ isLogIn: !isLogIn });
+          // console.log("로그인체크", this.state);
+        }
+      });
+    }
   };
 
   render() {
