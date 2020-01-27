@@ -53,9 +53,9 @@ class SignIn extends Component {
             // console.log("로그인체크", this.state);
           }
         })
-        .catch(error => {
-          console.log("에러응답", error);
-          alert(error.message);
+        .catch(err => {
+          console.log("에러응답", err);
+          alert(err.message);
           this.setState({ email: "", password: "" });
         });
     }

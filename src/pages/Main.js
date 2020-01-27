@@ -7,7 +7,8 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      boards: ["achieve", "todolist"],
+      boards: [],
+      // boards: ["achieve", "todolist"],
       newBoard: "",
       isCheckCreateBoard: false
     };
@@ -74,14 +75,21 @@ class Main extends Component {
     // console.log(board);
     // 해당보드네임이나 아이디를 서버로 보낸뒤에 db에서 삭제를 한 후 db에서 전체 board정보를 가져와 setState해줘 렌더
     let body = {
-      board_name: board
+      boardID: board
     };
     api("/boards", "DELETE", body).then(res => console.log(res));
     //req를 삭제할 것을 보내 db에서 삭제한 후 전체boards를 가져와서 this.setState({boards: res})로 처리
   };
 
   componentDidMount() {
-    api("/boards", "GET").then(res => console.log(res)); //    /boards-> /users로 변경 session.user_id로 변경
+    api("/user", "GET")
+      .then(res => {
+        console.log("보드가져오기", res);
+        this.setState({ boards: res.boards });
+      })
+      .catch(err => {
+        console.log("보드가져오기 에러", err);
+      }); //    /boards-> /users로 변경 session.user_id로 변경
     //res를 this.setState({boards: res})로 처리
   }
 
@@ -105,20 +113,27 @@ class Main extends Component {
             <span onClick={this.clickSubmitNewBoard}>Create</span>
           </div>
           <div>
-            {boards.map(board => (
-              <div
-                key={board}
-                style={{
-                  backgroundColor: "lightgrey",
-                  width: 200,
-                  margin: 10,
-                  padding: 5
-                }}
-              >
-                <Link to={`/board/${board}`}>{board}</Link>
-                <span onClick={() => this.deleteBoard(board)}> 삭제</span>
-              </div>
-            ))}
+            {boards.length !== 0
+              ? boards.map(board => (
+                  <div
+                    key={board.id}
+                    style={{
+                      backgroundColor: "lightgrey",
+                      width: 200,
+                      margin: 10,
+                      padding: 5
+                    }}
+                  >
+                    <Link to={`/board/${board.id}/${board.name}`}>
+                      {board.name}
+                    </Link>
+                    <span onClick={() => this.deleteBoard(board.id)}>
+                      {" "}
+                      삭제
+                    </span>
+                  </div>
+                ))
+              : null}
           </div>
         </div>
       </div>

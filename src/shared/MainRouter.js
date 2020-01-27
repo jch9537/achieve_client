@@ -29,7 +29,7 @@ class MainRouter extends Component {
             render={props => <Setting userId={this.state.userId} {...props} />}
           />
           <Route
-            path="/board/:board_id"
+            path="/board/:board_id/:board_name"
             render={props => <Board userId={this.state.userId} {...props} />}
           />
         </Switch>

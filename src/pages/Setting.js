@@ -101,15 +101,26 @@ class Setting extends Component {
       //   };
       // }
       console.log("세팅바디", body);
-      api("/user", "PUT", body).then(res => {
-        alert(res.message);
-        this.setState({
-          name: "",
-          newPassword: "",
-          passwordCheck: "",
-          isConfirmPassword: !isConfirmPassword
+      api("/user", "PUT", body)
+        .then(res => {
+          alert(res.message);
+          this.setState({
+            name: "",
+            newPassword: "",
+            passwordCheck: "",
+            isConfirmPassword: !isConfirmPassword
+          });
+        })
+        .catch(err => {
+          console.log(err);
+          alert(err.message);
+          this.setState({
+            name: "",
+            newPassword: "",
+            passwordCheck: "",
+            isConfirmPassword: !isConfirmPassword
+          });
         });
-      });
     }
   };
   //   //비번만 바꿀 때
@@ -139,13 +150,16 @@ class Setting extends Component {
   // }
 
   deleteUser = () => {
-    let body = {
-      user_id: "Session_userId"
-    };
-    api("/user", "DELETE", body).then(res => {
-      alert(res.message);
-      this.setState({ isDeleteUser: !this.state.isDeleteUser });
-    });
+    api("/user", "DELETE")
+      .then(res => {
+        console.log("회원탈퇴 응답", res);
+        alert(res.message);
+        this.setState({ isDeleteUser: !this.state.isDeleteUser });
+      })
+      .catch(err => {
+        console.log(err);
+        alert(err.message);
+      });
   };
 
   render() {
@@ -159,7 +173,7 @@ class Setting extends Component {
     // console.log("세팅스테이트", this.state);
     console.log("세팅프롭", this.props);
     if (isDeleteUser) {
-      return <Redirect to="/home" component={Home} />;
+      return <Redirect to="/" component={Home} />;
     } else {
       return (
         <div>

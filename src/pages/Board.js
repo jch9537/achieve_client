@@ -9,7 +9,7 @@ class Board extends Component {
     super(props);
     this.state = {
       todos: ["todo", "doing", "done"],
-      board: this.props.match.params.board_id,
+      board: this.props.match.params.board_name,
       changeBoard: "",
       isCheckChangeBoard: true,
       newTodo: "",

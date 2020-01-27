@@ -80,16 +80,14 @@ class SignUp extends Component {
       };
       api("/user/signup", "POST", body)
         .then(res => {
-          // if (res.status === 201) {
-          console.log("회원가입확인", res);
+          // console.log("회원가입확인", res);
           alert(res.message);
-          //회원가입완료 말고 상태체크(status)나 다른걸로생각해보기
           this.props.handleToggle();
           // }
         })
         .catch(err => {
           console.log("에러응답", err);
-          alert(err.message);
+          alert(err.message, "+", err.status);
           this.setState({ email: "" });
         });
     }
