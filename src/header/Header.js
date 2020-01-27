@@ -1,39 +1,25 @@
 import React, { Component } from "react";
-
-// import Main from "../pages/Main";
-import SignOut from "../components/sign/signout";
 import { NavLink } from "react-router-dom";
 
+import SignOut from "../components/sign/signout";
+
 class Header extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      // user_id: this.props.back.match.params.user_id
-    };
-  }
-  goBack = () => {
-    this.props.back.history.goBack();
-  };
   render() {
-    console.log("헤더스테이트", this.state);
+    const { userId, history } = this.props;
     console.log("헤더프롭", this.props);
+
     return (
       <div style={{ backgroundColor: "#ddceed", padding: 10 }}>
         <div>
           <h2>Header</h2>
           <div>
-            <NavLink to={`/main/${this.props.back.match.params.user_id}`}>
-              {/* 각컴포넌트에서 user_id를 가져오는방법고민 */}
-              Home
-            </NavLink>
+            <NavLink to={`/${userId}/main`}>Home</NavLink>
           </div>
           <div>
-            <NavLink to={`/setting/${this.props.back.match.params.user_id}`}>
-              Setting
-            </NavLink>
+            <NavLink to={`/${userId}/setting`}>Setting</NavLink>
           </div>
-          <SignOut />
-          <button onClick={this.goBack}>뒤로가기</button>
+          <SignOut userId={userId} />
+          <button onClick={history.goBack}>뒤로가기</button>
         </div>
       </div>
     );

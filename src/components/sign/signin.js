@@ -7,6 +7,7 @@ class SignIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      userId: "",
       email: "",
       password: "",
       isLogIn: false
@@ -44,31 +45,37 @@ class SignIn extends Component {
         email: email,
         password: password
       };
-      api("/user/signin", "POST", body).then(res => {
-        if (res.message === "로그인 완료") {
-          this.setState({ isLogIn: !isLogIn });
-          // console.log("로그인체크", this.state);
-        }
-      });
+      api("/user/signin", "POST", body)
+        .then(res => {
+          if (res.message === "로그인 완료") {
+            console.log("응답", res);
+            this.setState({ userId: res.userId, isLogIn: !isLogIn });
+            // console.log("로그인체크", this.state);
+          }
+        })
+        .catch(error => {
+          console.log("에러응답", error);
+          alert(error.message);
+          this.setState({ email: "", password: "" });
+        });
     }
   };
 
   render() {
-    const { isLogIn, email } = this.state;
-    // console.log("사인인 스테이트", this.state);
+    const { isLogIn, userId } = this.state;
+    console.log("사인인 스테이트", this.state);
     // console.log("사인인 프롭", this.props);
 
     if (isLogIn) {
       alert("로그인 완료");
-      return <Redirect to={`/main/${email}`} />;
-      //만약에 결과가 맞으면 this.props.history.push(/Main)
+      return <Redirect to={`/${userId}/main`} />;
     } else {
       return (
         <div style={{ backgroundColor: "beige", padding: 10 }}>
           <h2>SignIn</h2>
-
           <div>
             <input
+              value={this.state.email}
               type="email"
               placeholder="Email"
               onChange={e => this.writeEmail(e)}
@@ -76,6 +83,7 @@ class SignIn extends Component {
           </div>
           <div>
             <input
+              value={this.state.password}
               type="password"
               placeholder="Password"
               onChange={e => this.writePassword(e)}

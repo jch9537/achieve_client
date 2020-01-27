@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
 import api from "../api";
-import Header from "../header/Header";
 import Todos from "../components/todo/todos";
+
 //보드에서 이름을 수정하면 메인에서도 이름이 바껴야하므로 main에서 state관리
 class Board extends Component {
   constructor(props) {
@@ -98,9 +98,6 @@ class Board extends Component {
 
     return (
       <div>
-        <div>
-          <Header back={this.props} />
-        </div>
         <div style={{ backgroundColor: "green", padding: 2 }}>
           <div>
             {isCheckChangeBoard ? (

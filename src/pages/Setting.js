@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 
 import api from "../api";
-import Header from "../header/Header";
 import Home from "../pages/Home";
 
 // 비밀번호 재확인 시 debounce를 써서 메세지 표시(확인버튼 지우기)
@@ -79,48 +78,65 @@ class Setting extends Component {
       alert("비밀번호가 일치하지 않습니다.");
       this.setState({ newPassword: "", passwordCheck: "" });
     } else {
-      //둘 다 바꿀 때
-      if (name && newPassword) {
-        let body = {
-          name: name,
-          password: newPassword
-        };
-        api("/user", "PUT", body).then(res => {
-          alert(res.message);
-          this.setState({
-            name: "",
-            newPassword: "",
-            passwordCheck: "",
-            isConfirmPassword: !isConfirmPassword
-          });
+      // let body;
+      // //둘 다 바꿀 때
+      // if (name && newPassword) {
+      let body = {
+        userId: this.props.match.params.userId,
+        name: name,
+        password: newPassword
+      };
+      // } //비번만 바꿀 때
+      // else if (newPassword) {
+      //   body = {
+      //     userId: this.props.userId,
+      //     password: newPassword
+      //   };
+      // }
+      // // 이름만 바꿀 때
+      // else {
+      //   body = {
+      //     userId: this.props.userId,
+      //     name: name
+      //   };
+      // }
+      console.log("세팅바디", body);
+      api("/user", "PUT", body).then(res => {
+        alert(res.message);
+        this.setState({
+          name: "",
+          newPassword: "",
+          passwordCheck: "",
+          isConfirmPassword: !isConfirmPassword
         });
-      }
-      //비번만 바꿀 때
-      else if (newPassword) {
-        let body = {
-          password: newPassword
-        };
-        api("/user", "PUT", body).then(res => {
-          alert(res.message);
-          this.setState({
-            newPassword: "",
-            passwordCheck: "",
-            isConfirmPassword: !isConfirmPassword
-          });
-        });
-      }
-      // 이름만 바꿀 때
-      else {
-        let body = {
-          name: name
-        };
-        api("/user", "PUT", body).then(res => {
-          alert(res.message);
-          this.setState({ name: "" });
-        });
-      }
+      });
     }
   };
+  //   //비번만 바꿀 때
+  //   else if (newPassword) {
+  //     let body = {
+  //       password: newPassword
+  //     };
+  //     api("/user", "PUT", body).then(res => {
+  //       alert(res.message);
+  //       this.setState({
+  //         newPassword: "",
+  //         passwordCheck: "",
+  //         isConfirmPassword: !isConfirmPassword
+  //       });
+  //     });
+  //   }
+  //   // 이름만 바꿀 때
+  //   else {
+  //     let body = {
+  //       name: name
+  //     };
+  //     api("/user", "PUT", body).then(res => {
+  //       alert(res.message);
+  //       this.setState({ name: "" });
+  //     });
+  //   }
+  // }
 
   deleteUser = () => {
     let body = {
@@ -141,15 +157,12 @@ class Setting extends Component {
       isDeleteUser
     } = this.state;
     // console.log("세팅스테이트", this.state);
-    // console.log("세팅프롭", this.props);
+    console.log("세팅프롭", this.props);
     if (isDeleteUser) {
       return <Redirect to="/home" component={Home} />;
     } else {
       return (
         <div>
-          <div>
-            <Header back={this.props} />
-          </div>
           <div style={{ backgroundColor: "#64a4dd", padding: 10 }}>
             <span style={{ fontSize: 30 }}>
               <b> Setting </b>

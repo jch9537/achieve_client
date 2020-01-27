@@ -11,18 +11,27 @@ class SignOut extends Component {
     };
   }
   implementSignOut = () => {
-    const aa = "aa"; //session을 넣는다
-    api("/user/signout", "POST", { aa }).then(res => {
-      if (res.message === "로그아웃완료") {
+    let body = {
+      userId: this.props.userId
+    };
+    api("/user/signout", "POST", body)
+      .then(res => {
+        alert(res.message);
         this.setState({ completeSignout: !this.state.completeSignout });
-      }
-    });
+      })
+      .catch(error => {
+        console.log("로그아웃 에러발생", error);
+        if (error.status === 401) {
+          alert(error.message);
+        } else if (error.status === 500) {
+          alert(error.message);
+        }
+      });
   };
   render() {
     const { completeSignout } = this.state;
 
     if (completeSignout) {
-      alert("로그아웃완료");
       return <Redirect to="/" />;
     } else {
       return (

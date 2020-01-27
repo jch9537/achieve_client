@@ -1,27 +1,41 @@
-// import React, { Component } from "react";
-// import { Route, Switch } from "react-router-dom";
+import React, { Component } from "react";
+import { Route, Switch } from "react-router-dom";
 
-// import Main from "../pages/Main";
-// import Board from "../pages/Board";
-// import Setting from "../pages/Setting";
-// import SignOut from "../components/sign/signout";
+import Header from "../header/Header";
+import Main from "../pages/Main";
+import Board from "../pages/Board";
+import Setting from "../pages/Setting";
 
-// class MainRouter extends Component {
-//   state = {};
-//   render() {
-//     return (
-//       <div>
-//         <Switch>
-//           <Route path="/signout" component={SignOut} />
-//           <Route path="/setting" component={Setting} />
-//           <Route path="/main/:user_id" component={Main} />
-//           <Route path="/main" component={Main} />
-//           <Route path="/board/:board_id" component={Board} />
-//           <Route path="/board" component={Board} />
-//         </Switch>
-//       </div>
-//     );
-//   }
-// }
+class MainRouter extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userId: this.props.match.params.userId
+    };
+  }
+  render() {
+    console.log("메인라우터 프롭스", this.props);
+    console.log("메인라우터 스테이트", this.state);
+    return (
+      <div>
+        <Header userId={this.state.userId} {...this.props} />
+        <Switch>
+          <Route
+            path="/:userId/main"
+            render={props => <Main userId={this.state.userId} {...props} />}
+          />
+          <Route
+            path="/:userId/setting"
+            render={props => <Setting userId={this.state.userId} {...props} />}
+          />
+          <Route
+            path="/board/:board_id"
+            render={props => <Board userId={this.state.userId} {...props} />}
+          />
+        </Switch>
+      </div>
+    );
+  }
+}
 
-// export default MainRouter;
+export default MainRouter;

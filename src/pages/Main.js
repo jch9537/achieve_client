@@ -2,13 +2,11 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 import api from "../api";
-import Header from "../header/Header";
 
 class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user_id: this.props.match.params.user_id,
       boards: ["achieve", "todolist"],
       newBoard: "",
       isCheckCreateBoard: false
@@ -20,8 +18,8 @@ class Main extends Component {
   };
 
   createBoard = e => {
-    let newBoard = e.target.value;
-    this.setState({ newBoard: newBoard });
+    let __newBoard = e.target.value;
+    this.setState({ newBoard: __newBoard });
   };
 
   enterSubmitNewBoard = () => {
@@ -82,12 +80,8 @@ class Main extends Component {
     //req를 삭제할 것을 보내 db에서 삭제한 후 전체boards를 가져와서 this.setState({boards: res})로 처리
   };
 
-  // moveEachBoard = e => {
-  //   this.setState({ selectBoard: e.board }); // e.board는 서버연결 후 보드아이디로 변경하기
-  // };  --> 이것도 작동함 안쓰면 지우기
-
   componentDidMount() {
-    api("/boards", "GET").then(res => console.log(res));
+    api("/boards", "GET").then(res => console.log(res)); //    /boards-> /users로 변경 session.user_id로 변경
     //res를 this.setState({boards: res})로 처리
   }
 
@@ -96,14 +90,8 @@ class Main extends Component {
     console.log("메인 스테이트", this.state);
     console.log("메인프롭스", this.props);
 
-    // if (this.state.selectBoard) {
-    //   return <Redirect to={`/board/${selectBoard}`} />;
-    // }  -> 안쓰면 지우기
     return (
       <div>
-        <div>
-          <Header back={this.props} />
-        </div>
         <div style={{ backgroundColor: "#a1c3e2", padding: 10 }}>
           <h2>Main</h2>
           <div>
@@ -119,7 +107,6 @@ class Main extends Component {
           <div>
             {boards.map(board => (
               <div
-                // onClick={() => this.moveEachBoard({ board })}
                 key={board}
                 style={{
                   backgroundColor: "lightgrey",
