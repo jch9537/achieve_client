@@ -78,28 +78,11 @@ class Setting extends Component {
       alert("비밀번호가 일치하지 않습니다.");
       this.setState({ newPassword: "", passwordCheck: "" });
     } else {
-      // let body;
-      // //둘 다 바꿀 때
-      // if (name && newPassword) {
       let body = {
         userId: this.props.match.params.userId,
         name: name,
         password: newPassword
       };
-      // } //비번만 바꿀 때
-      // else if (newPassword) {
-      //   body = {
-      //     userId: this.props.userId,
-      //     password: newPassword
-      //   };
-      // }
-      // // 이름만 바꿀 때
-      // else {
-      //   body = {
-      //     userId: this.props.userId,
-      //     name: name
-      //   };
-      // }
       console.log("세팅바디", body);
       api("/user", "PUT", body)
         .then(res => {
@@ -123,34 +106,12 @@ class Setting extends Component {
         });
     }
   };
-  //   //비번만 바꿀 때
-  //   else if (newPassword) {
-  //     let body = {
-  //       password: newPassword
-  //     };
-  //     api("/user", "PUT", body).then(res => {
-  //       alert(res.message);
-  //       this.setState({
-  //         newPassword: "",
-  //         passwordCheck: "",
-  //         isConfirmPassword: !isConfirmPassword
-  //       });
-  //     });
-  //   }
-  //   // 이름만 바꿀 때
-  //   else {
-  //     let body = {
-  //       name: name
-  //     };
-  //     api("/user", "PUT", body).then(res => {
-  //       alert(res.message);
-  //       this.setState({ name: "" });
-  //     });
-  //   }
-  // }
 
   deleteUser = () => {
-    api("/user", "DELETE")
+    let body = {
+      userId: this.props.userId
+    };
+    api("/user", "DELETE", body)
       .then(res => {
         console.log("회원탈퇴 응답", res);
         alert(res.message);

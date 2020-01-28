@@ -9,46 +9,10 @@ class Board extends Component {
     super(props);
     this.state = {
       todos: ["todo", "doing", "done"],
-      board: this.props.match.params.board_name,
-      changeBoard: "",
-      isCheckChangeBoard: true,
       newTodo: "",
       isCheckCreateTodo: false
     };
   }
-
-  isChangeBoardName = () => {
-    this.setState({ isCheckChangeBoard: !this.state.isCheckChangeBoard });
-  };
-
-  changeBoardName = e => {
-    // console.log("새보드이름", e.target.value);
-    let __changeBoard = e.target.value;
-    this.setState({ changeBoard: __changeBoard });
-  };
-
-  submitChangeBoard = () => {
-    const { changeBoard, isCheckChangeBoard } = this.state;
-
-    if (!changeBoard) {
-      alert("수정할 board의 이름을 적어주세요");
-      this.setState({ isCheckChangeBoard: !isCheckChangeBoard });
-    } else {
-      let body = {
-        changeBoard: changeBoard
-      };
-      if (window.event.keyCode === 13) {
-        api("/boards", "PUT", body).then(res => {
-          console.log(res);
-          this.setState({
-            board: res.changeBoard,
-            changeBoard: "",
-            isCheckChangeBoard: !isCheckChangeBoard
-          });
-        });
-      }
-    }
-  };
 
   isCreateTodo = () => {
     this.setState({ isCheckCreateTodo: !this.state.isCheckCreateTodo });
@@ -87,12 +51,15 @@ class Board extends Component {
     }
   };
 
-  componentDidMount() {
-    api("/boards", "GET").then(res => console.log(res));
-  }
-
   render() {
-    const { board, isCheckChangeBoard, todos, isCheckCreateTodo } = this.state;
+    const { todos, isCheckCreateTodo } = this.state;
+    const {
+      board,
+      isCheckChangeBoard,
+      isChangeBoardName,
+      changeBoardName,
+      submitChangeBoard
+    } = this.props;
     console.log("보드스테이트", this.state);
     console.log("보드프롭", this.props);
 
@@ -102,15 +69,15 @@ class Board extends Component {
           <div>
             {isCheckChangeBoard ? (
               <div>
-                <span style={{ fontSize: 25 }} onClick={this.isChangeBoardName}>
-                  <b>{board}</b>
+                <span style={{ fontSize: 25 }} onClick={isChangeBoardName}>
+                  <b>{board.board_name}</b>
                 </span>
-                <span onClick={this.isChangeBoardName}>수정</span>
+                <span onClick={isChangeBoardName}>수정</span>
               </div>
             ) : (
               <input
-                onChange={e => this.changeBoardName(e)}
-                onKeyUp={this.submitChangeBoard}
+                onChange={e => changeBoardName(e)}
+                onKeyUp={submitChangeBoard}
                 placeholder="Chage Board Name"
               ></input>
             )}

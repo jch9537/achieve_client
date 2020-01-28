@@ -1,7 +1,7 @@
 const server = "http://localhost:8000";
 
 function api(url, method, body) {
-  if (method === "GET" || method === "DELETE") {
+  if (method === "GET") {
     return fetch(`${server}${url}`, {
       method,
       mode: "cors",
