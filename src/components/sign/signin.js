@@ -50,7 +50,6 @@ class SignIn extends Component {
           if (res.message === "로그인 완료") {
             console.log("응답", res);
             this.setState({ userId: res.userId, isLogIn: !isLogIn });
-            // console.log("로그인체크", this.state);
           }
         })
         .catch(err => {
@@ -64,7 +63,7 @@ class SignIn extends Component {
   render() {
     const { isLogIn, userId } = this.state;
     console.log("사인인 스테이트", this.state);
-    // console.log("사인인 프롭", this.props);
+    console.log("사인인 프롭", this.props);
 
     if (isLogIn) {
       alert("로그인 완료");

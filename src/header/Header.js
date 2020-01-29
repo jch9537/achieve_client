@@ -1,11 +1,39 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 
+import api from "../api";
 import SignOut from "../components/sign/signout";
 
 class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      // userName: "",
+      completeSignout: false
+    };
+  }
+
+  implementSignOut = () => {
+    let body = {
+      userId: this.props.userInfo.id
+    };
+    api("/user/signout", "POST", body)
+      .then(res => {
+        alert(res.message);
+        this.setState({ completeSignout: !this.state.completeSignout });
+      })
+      .catch(error => {
+        console.log("로그아웃 에러발생", error);
+        if (error.status === 401) {
+          alert(error.message);
+        } else if (error.status === 500) {
+          alert(error.message);
+        }
+      });
+  };
+
   render() {
-    const { userInfo, userId, history } = this.props;
+    const { userInfo, history } = this.props;
     console.log("헤더프롭", this.props);
     if (!userInfo) {
       return null;
@@ -20,7 +48,11 @@ class Header extends Component {
             <div>
               <NavLink to={`/${userInfo.id}/setting`}>Setting</NavLink>
             </div>
-            <SignOut userId={userId} />
+            <SignOut
+              userId={userInfo.id}
+              completeSignout={this.state.completeSignout}
+              implementSignOut={this.implementSignOut}
+            />
             <button onClick={history.goBack}>뒤로가기</button>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
-import Task from "./task";
 import api from "../../api";
+import Task from "./task";
 
 class Todo extends Component {
   constructor(props) {
@@ -11,7 +11,6 @@ class Todo extends Component {
       chageTodo: "",
       isCheckChangeTodo: false,
       tasks: null,
-      // tasks: ["할일1", "할일2"],
       newTask: "",
       isCheckCreateTask: false
     };
@@ -32,7 +31,7 @@ class Todo extends Component {
     const { isCheckChangeTodo, chageTodo } = this.state;
 
     if (!chageTodo) {
-      alert("수정할 todo의 이름을 적어주세요");
+      // alert("수정할 todo의 이름을 적어주세요");
       this.setState({ isCheckChangeTodo: !isCheckChangeTodo });
     } else {
       let body = {
@@ -49,7 +48,7 @@ class Todo extends Component {
               isCheckChangeTodo: !isCheckChangeTodo
             });
           })
-          .catch(err => alert(err.message));
+          .catch(err => console.log(err));
       }
     }
   };
@@ -67,7 +66,7 @@ class Todo extends Component {
     const { newTask, isCheckCreateTask, tasks } = this.state;
 
     if (!newTask) {
-      alert("생성할 task의 이름을 적어주세요");
+      // alert("생성할 task의 이름을 적어주세요");
       this.setState({ isCheckCreateTask: !isCheckCreateTask });
     } else {
       if (window.event.keyCode === 13) {
@@ -77,7 +76,7 @@ class Todo extends Component {
         };
         api("/tasks", "POST", body)
           .then(res => {
-            console.log("태스크 포스트응답", res);
+            // console.log("태스크 포스트응답", res);
             this.setState({
               tasks: res.tasks,
               newTask: "",
@@ -96,7 +95,7 @@ class Todo extends Component {
     };
     api("/tasks", "DELETE", body)
       .then(res => {
-        console.log("task삭제 응답", res);
+        // console.log("task삭제 응답", res);
         this.setState({
           tasks: res.tasks
         });
@@ -107,7 +106,7 @@ class Todo extends Component {
   componentDidMount() {
     api(`/tasks/${this.props.todo.id}`, "GET")
       .then(res => {
-        console.log("태스크 응답", res);
+        // console.log("태스크 응답", res);
         this.setState({ tasks: res.tasks });
       })
       .catch(err => console.log(err));

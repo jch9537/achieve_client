@@ -4,7 +4,8 @@ import { Route, Switch } from "react-router-dom";
 import Home from "../pages/Home";
 import MainRouter from "./MainRouter";
 
-function App() {
+function App(props) {
+  console.log("APP프롭스", props);
   return (
     <div style={{ backgroundColor: "lightgrey", padding: 10 }}>
       <Switch>

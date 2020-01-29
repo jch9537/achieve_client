@@ -24,7 +24,7 @@ class Task extends Component {
     const { isCheckChageTask, changeTask } = this.state;
 
     if (!changeTask) {
-      alert("수정할 task의 이름을 적어주세요");
+      // alert("수정할 task의 이름을 적어주세요");
       this.setState({ isCheckChageTask: !isCheckChageTask });
     } else {
       let body = {
@@ -32,14 +32,16 @@ class Task extends Component {
         chageTask: changeTask
       };
       if (window.event.keyCode === 13) {
-        api("/tasks", "PUT", body).then(res => {
-          console.log(res);
-          this.setState({
-            task: res.task,
-            changeTask: "",
-            isCheckChageTask: !isCheckChageTask
-          });
-        });
+        api("/tasks", "PUT", body)
+          .then(res => {
+            // console.log(res);
+            this.setState({
+              task: res.task,
+              changeTask: "",
+              isCheckChageTask: !isCheckChageTask
+            });
+          })
+          .catch(err => console.log(err));
       }
     }
   };

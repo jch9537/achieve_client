@@ -80,14 +80,11 @@ class SignUp extends Component {
       };
       api("/user/signup", "POST", body)
         .then(res => {
-          // console.log("회원가입확인", res);
           alert(res.message);
           this.props.handleToggle();
-          // }
         })
         .catch(err => {
-          console.log("에러응답", err);
-          alert(err.message, "+", err.status);
+          alert(err.message);
           this.setState({ email: "" });
         });
     }
@@ -95,8 +92,8 @@ class SignUp extends Component {
 
   render() {
     const { isConfirmPassword } = this.state;
-    // console.log("사인업 스테이트", this.state);
-    // console.log("사인업 프롭", this.props);
+    console.log("사인업 스테이트", this.state);
+    console.log("사인업 프롭", this.props);
 
     return (
       <div style={{ backgroundColor: "beige", padding: 10 }}>

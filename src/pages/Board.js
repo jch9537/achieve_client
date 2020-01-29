@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import api from "../api";
 import Todo from "../components/todo/todo";
 
-//보드에서 이름을 수정하면 메인에서도 이름이 바껴야하므로 main에서 state관리
 class Board extends Component {
   constructor(props) {
     super(props);
@@ -22,16 +21,16 @@ class Board extends Component {
   };
 
   changeBoardName = e => {
-    console.log("새보드이름", e.target.value);
+    // console.log("새보드이름", e.target.value);
     let __changeBoard = e.target.value;
     this.setState({ changeBoard: __changeBoard });
   };
 
   submitChangeBoard = () => {
-    const { board, changeBoard, isCheckChangeBoard } = this.state;
+    const { changeBoard, isCheckChangeBoard } = this.state;
 
     if (!changeBoard) {
-      alert("수정할 board의 이름을 적어주세요");
+      // alert("수정할 board의 이름을 적어주세요");
       this.setState({ isCheckChangeBoard: !isCheckChangeBoard });
     } else {
       let body = {
@@ -49,7 +48,7 @@ class Board extends Component {
             });
           })
           .catch(err => {
-            alert(err.message);
+            console.log(err);
           });
       }
     }
@@ -68,7 +67,7 @@ class Board extends Component {
     const { newTodo, isCheckCreateTodo } = this.state;
 
     if (!newTodo) {
-      alert("생성할 todo의 이름을 적어주세요");
+      // alert("생성할 todo의 이름을 적어주세요");
       this.setState({ isCheckCreateTodo: !isCheckCreateTodo });
     } else {
       if (window.event.keyCode === 13) {
@@ -78,14 +77,14 @@ class Board extends Component {
         };
         api("/todos", "POST", body)
           .then(res => {
-            console.log("투두포스트 응답", res);
+            // console.log("투두포스트 응답", res);
             this.setState({
               todos: res.todos,
               newTodo: "",
               isCheckCreateTodo: !isCheckCreateTodo
             });
           })
-          .catch(err => alert(err.message));
+          .catch(err => console.log(err));
       }
     }
   };
@@ -109,13 +108,13 @@ class Board extends Component {
         console.log("보드응답", res);
         this.setState({ board: res.board });
       })
-      .catch(err => alert(err.message));
+      .catch(err => console.log(err));
     api(`/todos/${this.props.match.params.board_id}`, "GET")
       .then(res => {
         console.log("투두 응답", res);
         this.setState({ todos: res.todos });
       })
-      .catch(err => alert(err.message));
+      .catch(err => console.log(err));
   }
 
   render() {
