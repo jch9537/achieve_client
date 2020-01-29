@@ -3,18 +3,20 @@ import React, { Component } from "react";
 import Task from "./task";
 import api from "../../api";
 
-class Todos extends Component {
+class Todo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tasks: ["할일1", "할일2"],
-      todo: this.props.todo,
+      todo: null,
       chageTodo: "",
       isCheckChangeTodo: false,
+      task: null,
+      // tasks: ["할일1", "할일2"],
       newTask: "",
       isCheckCreateTask: false
     };
   }
+
   isChangeTodoName = () => {
     // console.log("이름바꾸기", e.todo);
     this.setState({ isCheckChangeTodo: !this.state.isCheckChangeTodo });
@@ -34,26 +36,22 @@ class Todos extends Component {
       this.setState({ isCheckChangeTodo: !isCheckChangeTodo });
     } else {
       let body = {
+        todo_id: Number(this.props.todo.id),
         changeTodo: chageTodo
       };
       if (window.event.keyCode === 13) {
-        api("/todos", "PUT", body).then(res => {
-          // console.log(res);
-          this.setState({
-            todo: res.changeTodo,
-            chageTodo: "", // 수정 후 빈내용을 보내면 alert안띄우고 이전값으로 돌아가려면 지우면 됨
-            isCheckChangeTodo: !isCheckChangeTodo
-          });
-        });
+        api("/todos", "PUT", body)
+          .then(res => {
+            // console.log(res);
+            this.setState({
+              todo: res.todo,
+              chageTodo: "",
+              isCheckChangeTodo: !isCheckChangeTodo
+            });
+          })
+          .catch(err => alert(err.message));
       }
     }
-  };
-
-  deleteTodo = () => {
-    let body = {
-      todo: this.state.todo
-    };
-    api("/todos", "DELETE", body).then(res => console.log(res));
   };
 
   isCreateTask = () => {
@@ -94,9 +92,10 @@ class Todos extends Component {
   };
 
   render() {
-    const { isCheckChangeTodo, isCheckCreateTask, tasks, todo } = this.state;
-    // console.log("todos프롭", this.props);
-    // console.log("todos스테이트", this.state);
+    const { todo, isCheckChangeTodo, isCheckCreateTask, tasks } = this.state;
+    const { deleteTodo } = this.props;
+    console.log("todos프롭", this.props);
+    console.log("todos스테이트", this.state);
     return (
       <div style={{ backgroundColor: "yellow", margin: 2 }}>
         <div>
@@ -106,12 +105,19 @@ class Todos extends Component {
               onKeyUp={this.submitChangeTodo}
               placeholder="Chage Todo Name"
             ></input>
+          ) : todo ? (
+            <div>
+              <span style={{ fontSize: 20 }} onClick={this.isChangeTodoName}>
+                <b>{todo.todo_name}</b>
+              </span>
+              <span onClick={() => deleteTodo(todo.id)}>삭제</span>
+            </div>
           ) : (
             <div>
               <span style={{ fontSize: 20 }} onClick={this.isChangeTodoName}>
-                <b>{todo}</b>
+                <b>{this.props.todo.todo_name}</b>
               </span>
-              <span onClick={this.deleteTodo}>삭제</span>
+              <span onClick={() => deleteTodo(this.props.todo.id)}>삭제</span>
             </div>
           )}
         </div>
@@ -124,17 +130,18 @@ class Todos extends Component {
         ) : (
           <div onClick={this.isCreateTask}>+ task생성</div>
         )}
-
         <div>
-          {tasks.map(task => (
-            <div key={task}>
-              <Task task={task} />
-            </div>
-          ))}
+          {tasks
+            ? tasks.map(task => (
+                <div key={task}>
+                  <Task task={task} />
+                </div>
+              ))
+            : null}
         </div>
       </div>
     );
   }
 }
 
-export default Todos;
+export default Todo;
