@@ -10,7 +10,7 @@ class Todo extends Component {
       todo: null,
       chageTodo: "",
       isCheckChangeTodo: false,
-      task: null,
+      tasks: null,
       // tasks: ["할일1", "할일2"],
       newTask: "",
       isCheckCreateTask: false
@@ -71,25 +71,47 @@ class Todo extends Component {
       this.setState({ isCheckCreateTask: !isCheckCreateTask });
     } else {
       if (window.event.keyCode === 13) {
-        let __tasks = tasks.slice();
-        let __newTask = newTask;
-        __tasks.push(__newTask);
-        this.setState({
-          tasks: __tasks,
-          isCheckCreateTask: !isCheckCreateTask,
-          newTask: ""
-        });
-        //위에껀 클라이언트 테스트용
         let body = {
-          newTask_name: newTask
+          todo_id: this.props.todo.id,
+          newTask: newTask
         };
-        api("/tasks", "POST", body).then(res => {
-          console.log(res);
-          // this.setState({tasks: res.tasks새로운태스크들}) 서버완성 후 수정
-        });
+        api("/tasks", "POST", body)
+          .then(res => {
+            console.log("태스크 포스트응답", res);
+            this.setState({
+              tasks: res.tasks,
+              newTask: "",
+              isCheckCreateTask: !this.state.isCheckCreateTask
+            });
+          })
+          .catch(err => console.log(err));
       }
     }
   };
+
+  deleteTask = task_id => {
+    let body = {
+      todo_id: this.props.todo.id,
+      task_id: task_id
+    };
+    api("/tasks", "DELETE", body)
+      .then(res => {
+        console.log("task삭제 응답", res);
+        this.setState({
+          tasks: res.tasks
+        });
+      })
+      .catch(err => console.log(err));
+  };
+
+  componentDidMount() {
+    api(`/tasks/${this.props.todo.id}`, "GET")
+      .then(res => {
+        console.log("태스크 응답", res);
+        this.setState({ tasks: res.tasks });
+      })
+      .catch(err => console.log(err));
+  }
 
   render() {
     const { todo, isCheckChangeTodo, isCheckCreateTask, tasks } = this.state;
@@ -133,8 +155,8 @@ class Todo extends Component {
         <div>
           {tasks
             ? tasks.map(task => (
-                <div key={task}>
-                  <Task task={task} />
+                <div key={task.id}>
+                  <Task task={task} deleteTask={this.deleteTask} />
                 </div>
               ))
             : null}

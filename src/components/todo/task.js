@@ -6,7 +6,7 @@ class Task extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      task: this.props.task,
+      task: null,
       changeTask: "",
       isCheckChageTask: false
     };
@@ -28,13 +28,14 @@ class Task extends Component {
       this.setState({ isCheckChageTask: !isCheckChageTask });
     } else {
       let body = {
+        task_id: this.props.task.id,
         chageTask: changeTask
       };
       if (window.event.keyCode === 13) {
         api("/tasks", "PUT", body).then(res => {
           console.log(res);
           this.setState({
-            task: res.changeTask,
+            task: res.task,
             changeTask: "",
             isCheckChageTask: !isCheckChageTask
           });
@@ -43,17 +44,10 @@ class Task extends Component {
     }
   };
 
-  deleteTask = () => {
-    let body = {
-      task: this.state.task
-    };
-    api("/tasks", "DELETE", body).then(res => console.log(res));
-  };
-
   render() {
     const { isCheckChageTask, task } = this.state;
-    // console.log('태스크스테이트', this.state)
-    // console.log('태스크프롭', this.props)
+    console.log("태스크스테이트", this.state);
+    console.log("태스크프롭", this.props);
 
     return (
       <div style={{ backgroundColor: "blue", margin: 3, padding: 2 }}>
@@ -63,12 +57,21 @@ class Task extends Component {
             onKeyUp={this.submitChangeTask}
             placeholder="Chage Task Name"
           ></input>
+        ) : task ? (
+          <div>
+            <span style={{ fontSize: 15 }} onClick={this.isChangeTaskName}>
+              <b>{task.task_name}</b>
+            </span>
+            <span onClick={() => this.props.deleteTask(task.id)}>삭제</span>
+          </div>
         ) : (
           <div>
             <span style={{ fontSize: 15 }} onClick={this.isChangeTaskName}>
-              <b>{task}</b>
+              <b>{this.props.task.task_name}</b>
             </span>
-            <span onClick={this.deleteTask}> 삭제</span>
+            <span onClick={() => this.props.deleteTask(this.props.task.id)}>
+              삭제
+            </span>
           </div>
         )}
       </div>
