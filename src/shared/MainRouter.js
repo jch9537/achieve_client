@@ -14,7 +14,7 @@ class MainRouter extends Component {
       userInfo: null,
       // userId: this.props.match.params.userId
 
-      name: "",
+      newName: "",
       newPassword: "",
       passwordCheck: "",
       isConfirmPassword: false,
@@ -26,8 +26,8 @@ class MainRouter extends Component {
   //이름변경
   changeName = e => {
     // console.log("이름수정", e.target.value);
-    let __name = e.target.value;
-    this.setState({ name: __name });
+    let __newName = e.target.value;
+    this.setState({ newName: __newName });
   };
   //이름중복확인 :api하나더 만들어야하나? -> 나중에 만들기
   // checkSameName = () => {
@@ -71,34 +71,33 @@ class MainRouter extends Component {
   // 변경정보 서버로 보냄
   submitInfo = () => {
     const {
-      name,
+      newName,
       newPassword,
       passwordCheck,
       isConfirmPassword
       // isMatchPassword
     } = this.state;
 
-    if (!(name || newPassword || passwordCheck)) {
+    if (!(newName || newPassword || passwordCheck)) {
       alert("변경할 내용을 입력해 주세요");
     } else if (newPassword !== passwordCheck) {
       alert("비밀번호가 일치하지 않습니다.");
       this.setState({ newPassword: "", passwordCheck: "" });
     } else {
       let body = {
-        userId: this.props.match.params.userId,
-        name: name,
-        password: newPassword
+        id: this.props.match.params.userId,
+        newName: newName,
+        newPassword: newPassword
       };
       // console.log("세팅바디", body);
       api("/user", "PUT", body)
         .then(res => {
           if (res.changeInfo) {
-            console.log(res.user_name);
             this.setState({ userInfo: res.changeInfo });
           }
           alert(res.message);
           this.setState({
-            name: "",
+            newName: "",
             newPassword: "",
             passwordCheck: "",
             isConfirmPassword: !isConfirmPassword
@@ -108,7 +107,7 @@ class MainRouter extends Component {
           console.log(err);
           alert(err.message);
           this.setState({
-            name: "",
+            newName: "",
             newPassword: "",
             passwordCheck: "",
             isConfirmPassword: !isConfirmPassword
@@ -119,7 +118,7 @@ class MainRouter extends Component {
 
   deleteUser = () => {
     let body = {
-      userId: this.props.userId
+      userId: this.state.userInfo.id
     };
     api("/user", "DELETE", body)
       .then(res => {
@@ -143,38 +142,41 @@ class MainRouter extends Component {
   }
 
   render() {
+    const {
+      userInfo,
+      newName,
+      newPassword,
+      passwordCheck,
+      isConfirmPassword,
+      isDeleteUser
+    } = this.state;
     console.log("메인라우터 프롭스", this.props);
     console.log("메인라우터 스테이트", this.state);
-    if (!this.state.userInfo) {
+    if (!userInfo) {
       return null;
     } else {
       return (
         <div>
-          <Header userInfo={this.state.userInfo} {...this.props} />
+          <Header userInfo={userInfo} {...this.props} />
           <Switch>
             <Route
               path="/:userId/main"
-              render={props => (
-                <Main userId={this.state.userInfo.id} {...props} />
-              )}
+              render={props => <Main userId={userInfo.id} {...props} />}
             />
             <Route
               path="/board/:board_id/:board_name"
-              render={props => (
-                <Board userId={this.state.userInfo.id} {...props} />
-              )}
+              render={props => <Board userId={userInfo.id} {...props} />}
             />
             <Route
               path="/:userId/setting"
               render={props => (
                 <Setting
-                  // userId={this.state.userInfo.id}
-                  userInfo={this.state.userInfo}
-                  name={this.state.name}
-                  newPassword={this.state.newPassword}
-                  passwordCheck={this.state.passwordCheck}
-                  isConfirmPassword={this.state.isConfirmPassword}
-                  isDeleteUser={this.state.deleteUser}
+                  userInfo={userInfo}
+                  newName={newName}
+                  newPassword={newPassword}
+                  passwordCheck={passwordCheck}
+                  isConfirmPassword={isConfirmPassword}
+                  isDeleteUser={isDeleteUser}
                   changeName={this.changeName}
                   changePassword={this.changePassword}
                   repeatPassword={this.repeatPassword}

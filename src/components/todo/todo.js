@@ -10,7 +10,7 @@ class Todo extends Component {
       todo: null,
       chageTodo: "",
       isCheckChangeTodo: false,
-      tasks: null,
+      tasks: [],
       newTask: "",
       isCheckCreateTask: false
     };
@@ -63,7 +63,7 @@ class Todo extends Component {
   };
 
   submitNewTask = () => {
-    const { newTask, isCheckCreateTask, tasks } = this.state;
+    const { newTask, isCheckCreateTask } = this.state;
 
     if (!newTask) {
       // alert("생성할 task의 이름을 적어주세요");
@@ -80,7 +80,7 @@ class Todo extends Component {
             this.setState({
               tasks: res.tasks,
               newTask: "",
-              isCheckCreateTask: !this.state.isCheckCreateTask
+              isCheckCreateTask: !isCheckCreateTask
             });
           })
           .catch(err => console.log(err));
@@ -139,6 +139,7 @@ class Todo extends Component {
                 <b>{this.props.todo.todo_name}</b>
               </span>
               <span onClick={() => deleteTodo(this.props.todo.id)}>삭제</span>
+              {/* //헷갈릴까봐 this.props그냥 둠 */}
             </div>
           )}
         </div>
@@ -152,13 +153,13 @@ class Todo extends Component {
           <div onClick={this.isCreateTask}>+ task생성</div>
         )}
         <div>
-          {tasks
-            ? tasks.map(task => (
+          {!tasks.length
+            ? null
+            : tasks.map(task => (
                 <div key={task.id}>
                   <Task task={task} deleteTask={this.deleteTask} />
                 </div>
-              ))
-            : null}
+              ))}
         </div>
       </div>
     );

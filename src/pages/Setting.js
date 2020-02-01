@@ -7,7 +7,7 @@ import Home from "../pages/Home";
 
 const Setting = props => {
   const {
-    name,
+    newName,
     newPassword,
     passwordCheck,
     isConfirmPassword,
@@ -35,7 +35,7 @@ const Setting = props => {
           <div>
             {/* 내용을 api로보내고 중복이있으면 옆에 메세지를 보낸 후 내용을 빈공간처리 */}
             <input
-              value={name}
+              value={newName}
               onChange={e => changeName(e)}
               type="text"
               placeholder="Change Name"

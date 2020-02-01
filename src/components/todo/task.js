@@ -48,6 +48,7 @@ class Task extends Component {
 
   render() {
     const { isCheckChageTask, task } = this.state;
+    const { deleteTask } = this.props;
     console.log("태스크스테이트", this.state);
     console.log("태스크프롭", this.props);
 
@@ -64,16 +65,15 @@ class Task extends Component {
             <span style={{ fontSize: 15 }} onClick={this.isChangeTaskName}>
               <b>{task.task_name}</b>
             </span>
-            <span onClick={() => this.props.deleteTask(task.id)}>삭제</span>
+            <span onClick={() => deleteTask(task.id)}>삭제</span>
           </div>
         ) : (
           <div>
             <span style={{ fontSize: 15 }} onClick={this.isChangeTaskName}>
               <b>{this.props.task.task_name}</b>
             </span>
-            <span onClick={() => this.props.deleteTask(this.props.task.id)}>
-              삭제
-            </span>
+            <span onClick={() => deleteTask(this.props.task.id)}>삭제</span>
+            {/* //헷갈릴까봐 this.props그냥 둠 */}
           </div>
         )}
       </div>

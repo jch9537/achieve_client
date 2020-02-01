@@ -10,7 +10,7 @@ class Board extends Component {
       board: null,
       changeBoard: "",
       isCheckChangeBoard: false,
-      todos: null,
+      todos: [],
       newTodo: "",
       isCheckCreateTodo: false
     };
@@ -138,7 +138,7 @@ class Board extends Component {
                   {board ? (
                     <b>{board.board_name}</b>
                   ) : (
-                    <p>{this.props.match.params.board_name}</p>
+                    <b>{this.props.match.params.board_name}</b>
                   )}
                 </span>
                 <span onClick={this.isChangeBoardName}>수정</span>
@@ -157,15 +157,15 @@ class Board extends Component {
             )}
           </div>
           <div>
-            {todos
-              ? todos.map(todo => (
+            {!todos.length
+              ? null
+              : todos.map(todo => (
                   <Todo
                     key={`${todo.id}`}
                     todo={todo}
                     deleteTodo={this.deleteTodo}
                   />
-                ))
-              : null}
+                ))}
           </div>
         </div>
       </div>

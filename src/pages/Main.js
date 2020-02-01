@@ -7,7 +7,7 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      boards: null,
+      boards: [],
       newBoard: ""
     };
   }
@@ -39,7 +39,7 @@ class Main extends Component {
   };
 
   clickSubmitNewBoard = () => {
-    const { newBoard, isCheckCreateBoard, boards } = this.state;
+    const { newBoard } = this.state;
 
     if (!newBoard) {
       // alert("생성할 board의 이름을 적어주세요");
@@ -101,7 +101,7 @@ class Main extends Component {
             <span onClick={this.clickSubmitNewBoard}>Create</span>
           </div>
           <div>
-            {!boards
+            {!boards.length
               ? null
               : boards.map(board => (
                   <div
