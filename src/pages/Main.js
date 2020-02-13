@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-import api from "../api";
+import api from "../util/api";
 
 class Main extends Component {
   constructor(props) {

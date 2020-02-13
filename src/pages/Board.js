@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import api from "../api";
+import api from "../util/api";
 import Todo from "../components/todo/todo";
 
 class Board extends Component {

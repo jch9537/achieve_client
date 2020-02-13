@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 
-import api from "../../api";
+import api from "../../util/api";
 
 class SignIn extends Component {
   constructor(props) {

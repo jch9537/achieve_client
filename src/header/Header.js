@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 
-import api from "../api";
+import api from "../util/api";
 import SignOut from "../components/sign/signout";
 
 class Header extends Component {

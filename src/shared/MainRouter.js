@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
 
-import api from "../api";
+import api from "../util/api";
 import Header from "../header/Header";
 import Main from "../pages/Main";
 import Board from "../pages/Board";

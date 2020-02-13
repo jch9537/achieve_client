@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import api from "../../api";
+import api from "../../util/api";
 
 class Task extends Component {
   constructor(props) {

@@ -20,6 +20,7 @@ function api(url, method, body) {
         }
       });
   } else {
+    console.log();
     return fetch(`${server}${url}`, {
       method,
       mode: "cors",
