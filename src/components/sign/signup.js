@@ -149,36 +149,69 @@ class SignUp extends Component {
     return (
       <div style={{ backgroundColor: "beige", padding: 10 }}>
         <h2>SignUp</h2>
-
-        <div>
+        <div className="input-group flex-nowrap">
+          <div className="input-group-prepend">
+            <span className="input-group-text" id="addon-wrapping">
+              @
+            </span>
+          </div>
           <input
             type="text"
-            placeholder="Name"
+            className="form-control"
+            placeholder="Username"
+            aria-label="Username"
+            aria-describedby="addon-wrapping"
             onChange={e => this.createName(e)}
-            autoFocus
           />
         </div>
-        <div>
+
+        <div className="input-group flex-nowrap">
+          <div className="input-group-prepend">
+            <span className="input-group-text" id="addon-wrapping">
+              @
+            </span>
+          </div>
           <input
-            value={email}
             type="email"
+            className="form-control"
+            value={email}
             placeholder="Email"
+            aria-label="Email"
+            aria-describedby="button-addon2"
             onChange={e => this.createEmail(e)}
           />
-          <button onClick={this.checkDuplicateEmail}>중복확인</button>
-          {email ? (
-            isValidEmail ? (
-              <span style={{ color: "blue" }}>사용가능한 email입니다.</span>
-            ) : (
-              <span style={{ color: "red" }}>유효하지 않은 email입니다.</span>
-            )
-          ) : null}
+          <div className="input-group-append">
+            <button
+              className="btn btn-outline-secondary"
+              type="button"
+              id="button-addon2"
+              onClick={this.checkDuplicateEmail}
+            >
+              중복확인
+            </button>
+            {email ? (
+              isValidEmail ? (
+                <span style={{ color: "blue" }}>사용가능한 email입니다.</span>
+              ) : (
+                <span style={{ color: "red" }}>유효하지 않은 email입니다.</span>
+              )
+            ) : null}
+          </div>
         </div>
-        <div>
+
+        <div className="input-group flex-nowrap">
+          <div className="input-group-prepend">
+            <span className="input-group-text" id="addon-wrapping">
+              @
+            </span>
+          </div>
           <input
+            type="text"
+            className="form-control"
             value={password}
-            type="password"
             placeholder="Password"
+            aria-label="Password"
+            aria-describedby="addon-wrapping"
             onChange={e => this.createPassword(e)}
           />
           {password ? (
@@ -191,11 +224,20 @@ class SignUp extends Component {
             )
           ) : null}
         </div>
-        <div>
+
+        <div className="input-group flex-nowrap">
+          <div className="input-group-prepend">
+            <span className="input-group-text" id="addon-wrapping">
+              @
+            </span>
+          </div>
           <input
+            type="text"
+            className="form-control"
             value={passwordCheck}
-            type="password"
-            placeholder="Check Password"
+            placeholder="Confirm Password"
+            aria-label="Confirm Password"
+            aria-describedby="addon-wrapping"
             onChange={e => this.repeatPassword(e)}
           />
           {passwordCheck ? (
@@ -209,7 +251,13 @@ class SignUp extends Component {
           ) : null}
         </div>
 
-        <button onClick={this.submitSignUp}>SignUp</button>
+        <button
+          type="button"
+          className="btn btn-primary btn btn-block"
+          onClick={this.submitSignUp}
+        >
+          Sign Up
+        </button>
       </div>
     );
   }

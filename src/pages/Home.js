@@ -29,27 +29,26 @@ class Home extends Component {
               <h4>- 내일도 할 수 있는 일을 굳이 오늘 할 필요없다</h4>
             </div>
           </div>
-          {this.state.signInOrUp ? (
-            <div style={{ padding: 5 }}>
-              가입되어 있지 않나요?
-              <span
-                style={{ backgroundColor: "#a6cfa0", padding: 2, margin: 5 }}
-                onClick={this.toggleSignInOrUp}
-              >
-                Go! SignUp
-              </span>
-            </div>
-          ) : (
-            <div style={{ padding: 5 }}>
-              이미 가입되어 있나요?
-              <span
-                style={{ backgroundColor: "#a6cfa0", padding: 2, margin: 5 }}
-                onClick={this.toggleSignInOrUp}
-              >
-                Go! LogIn
-              </span>
-            </div>
-          )}
+          <div className="btn-group" role="group" aria-label="Basic example">
+            <button
+              type="button"
+              className="btn btn-secondary"
+              data-toggle="button"
+              onClick={this.toggleSignInOrUp}
+              disabled={this.state.signInOrUp ? null : "disabled"}
+            >
+              Go! SignUp
+            </button>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              data-toggle="button"
+              onClick={this.toggleSignInOrUp}
+              disabled={!this.state.signInOrUp ? null : "disabled"}
+            >
+              Go! SignIn
+            </button>
+          </div>
         </div>
         {this.state.signInOrUp ? (
           <SignIn />

@@ -227,3 +227,115 @@
 // }
 
 // export default SignUp;
+
+{
+  /*
+  사인업/인 버튼 
+  <div class="btn-group" role="group" aria-label="Basic example">
+<button
+  type="button"
+  class="btn btn-secondary"
+  data-toggle="button"
+  onClick={this.toggleSignInOrUp}
+  disabled={this.state.signInOrUp ? null : "disabled"}
+>
+  Go! SignUp
+</button>
+<button
+  type="button"
+  class="btn btn-secondary"
+  data-toggle="button"
+  onClick={this.toggleSignInOrUp}
+  disabled={!this.state.signInOrUp ? null : "disabled"}
+>
+  Go! SignIn
+</button>
+</div> */
+}
+
+{
+  /*
+    로그인 인풋 
+    <div>
+    <input
+        value={this.state.email}
+        type="email"
+        placeholder="Email"
+        onChange={e => this.writeEmail(e)}
+    />
+    </div>
+    <div>
+    <input
+        value={this.state.password}
+        type="password"
+        placeholder="Password"
+        onChange={e => this.writePassword(e)}
+    />
+    </div>
+    <button onClick={this.submitSignIn}>로그인</button> */
+}
+
+{
+  /*
+            //회원가입렌더
+             <div>
+          <input
+            type="text"
+            placeholder="Name"
+            onChange={e => this.createName(e)}
+            autoFocus
+          />
+        </div>
+        <div>
+          <input
+            value={email}
+            type="email"
+            placeholder="Email"
+            onChange={e => this.createEmail(e)}
+          />
+          <button onClick={this.checkDuplicateEmail}>중복확인</button>
+          {email ? (
+            isValidEmail ? (
+              <span style={{ color: "blue" }}>사용가능한 email입니다.</span>
+            ) : (
+              <span style={{ color: "red" }}>유효하지 않은 email입니다.</span>
+            )
+          ) : null}
+        </div>
+        <div>
+          <input
+            value={password}
+            type="password"
+            placeholder="Password"
+            onChange={e => this.createPassword(e)}
+          />
+          {password ? (
+            isValidPassword ? (
+              <span style={{ color: "blue" }}>사용가능한 password입니다.</span>
+            ) : (
+              <span style={{ color: "red" }}>
+                8~10자의 영문/숫자 조합을 사용해주세요
+              </span>
+            )
+          ) : null}
+        </div>
+        <div>
+          <input
+            value={passwordCheck}
+            type="password"
+            placeholder="Check Password"
+            onChange={e => this.repeatPassword(e)}
+          />
+          {passwordCheck ? (
+            isMatchPassword ? (
+              <span style={{ color: "blue" }}>비밀번호 확인완료</span>
+            ) : (
+              <span style={{ color: "red" }}>
+                비밀번호가 일치하지 않습니다.
+              </span>
+            )
+          ) : null}
+        </div>
+
+        <button onClick={this.submitSignUp}>SignUp</button> */
+}

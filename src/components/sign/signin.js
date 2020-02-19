@@ -72,23 +72,44 @@ class SignIn extends Component {
       return (
         <div style={{ backgroundColor: "beige", padding: 10 }}>
           <h2>SignIn</h2>
-          <div>
+          <div className="input-group flex-nowrap">
+            <div className="input-group-prepend">
+              <span className="input-group-text" id="addon-wrapping">
+                @
+              </span>
+            </div>
             <input
-              value={this.state.email}
               type="email"
+              className="form-control"
+              value={this.state.email}
               placeholder="Email"
+              aria-label="Email"
+              aria-describedby="addon-wrapping"
               onChange={e => this.writeEmail(e)}
             />
           </div>
-          <div>
+          <div className="input-group flex-nowrap">
+            <div className="input-group-prepend">
+              <span className="input-group-text" id="addon-wrapping">
+                @
+              </span>
+            </div>
             <input
-              value={this.state.password}
               type="password"
+              className="form-control"
               placeholder="Password"
+              aria-label="Password"
+              aria-describedby="addon-wrapping"
               onChange={e => this.writePassword(e)}
             />
           </div>
-          <button onClick={this.submitSignIn}>로그인</button>
+          <button
+            type="button"
+            className="btn btn-primary btn btn-block"
+            onClick={this.submitSignIn}
+          >
+            Log In
+          </button>
         </div>
       );
     }
