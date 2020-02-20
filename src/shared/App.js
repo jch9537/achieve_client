@@ -7,7 +7,7 @@ import MainRouter from "./MainRouter";
 function App(props) {
   console.log("APP프롭스", props);
   return (
-    <div style={{ backgroundColor: "lightgrey", padding: 10 }}>
+    <div style={{ backgroundColor: "lightgrey" }}>
       <Switch>
         <Route path="/:userId" component={MainRouter} />
         <Route path="/home" component={Home} />

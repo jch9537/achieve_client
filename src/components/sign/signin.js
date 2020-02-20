@@ -1,5 +1,12 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import {
+  FaUserCircle,
+  FaLock,
+  FaCheckDouble,
+  FaUserCheck
+} from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
 
 import api from "../../util/api";
 
@@ -75,7 +82,7 @@ class SignIn extends Component {
           <div className="input-group flex-nowrap">
             <div className="input-group-prepend">
               <span className="input-group-text" id="addon-wrapping">
-                @
+                <MdEmail />
               </span>
             </div>
             <input
@@ -91,7 +98,7 @@ class SignIn extends Component {
           <div className="input-group flex-nowrap">
             <div className="input-group-prepend">
               <span className="input-group-text" id="addon-wrapping">
-                @
+                <FaLock />
               </span>
             </div>
             <input

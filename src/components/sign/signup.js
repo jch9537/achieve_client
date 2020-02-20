@@ -1,4 +1,12 @@
 import React, { Component } from "react";
+import {
+  FaUserCircle,
+  FaLock,
+  FaCheckCircle,
+  FaCheckDouble,
+  FaUserCheck
+} from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
 
 import api from "../../util/api";
 import { isEmail, isPassword } from "../../util/check";
@@ -149,106 +157,117 @@ class SignUp extends Component {
     return (
       <div style={{ backgroundColor: "beige", padding: 10 }}>
         <h2>SignUp</h2>
-        <div className="input-group flex-nowrap">
-          <div className="input-group-prepend">
-            <span className="input-group-text" id="addon-wrapping">
-              @
-            </span>
+        <div id="signup-input-container" style={{ marginBottom: "15" }}>
+          <div className="input-group flex-nowrap">
+            <div className="input-group-prepend">
+              <span className="input-group-text" id="addon-wrapping">
+                <FaUserCircle />
+              </span>
+            </div>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Username"
+              aria-label="Username"
+              aria-describedby="addon-wrapping"
+              onChange={e => this.createName(e)}
+            />
           </div>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Username"
-            aria-label="Username"
-            aria-describedby="addon-wrapping"
-            onChange={e => this.createName(e)}
-          />
-        </div>
 
-        <div className="input-group flex-nowrap">
-          <div className="input-group-prepend">
-            <span className="input-group-text" id="addon-wrapping">
-              @
-            </span>
+          <div className="input-group flex-nowrap">
+            <div className="input-group-prepend">
+              <span className="input-group-text" id="addon-wrapping">
+                <MdEmail />
+              </span>
+            </div>
+            <input
+              type="email"
+              className="form-control"
+              value={email}
+              placeholder="Email"
+              aria-label="Email"
+              aria-describedby="button-addon2"
+              onChange={e => this.createEmail(e)}
+            />
+            <div className="input-group-append">
+              <button
+                className="btn btn-outline-secondary"
+                type="button"
+                id="button-addon2"
+                onClick={this.checkDuplicateEmail}
+              >
+                <FaUserCheck
+                  size="22"
+                  color="red"
+                  style={{ marginRight: "10" }}
+                />
+                Check Duplicate
+              </button>
+              {email ? (
+                isValidEmail ? (
+                  <span style={{ color: "blue" }}>사용가능한 email입니다.</span>
+                ) : (
+                  <span style={{ color: "red" }}>
+                    유효하지 않은 email입니다.
+                  </span>
+                )
+              ) : null}
+            </div>
           </div>
-          <input
-            type="email"
-            className="form-control"
-            value={email}
-            placeholder="Email"
-            aria-label="Email"
-            aria-describedby="button-addon2"
-            onChange={e => this.createEmail(e)}
-          />
-          <div className="input-group-append">
-            <button
-              className="btn btn-outline-secondary"
-              type="button"
-              id="button-addon2"
-              onClick={this.checkDuplicateEmail}
-            >
-              중복확인
-            </button>
-            {email ? (
-              isValidEmail ? (
-                <span style={{ color: "blue" }}>사용가능한 email입니다.</span>
+
+          <div className="input-group flex-nowrap">
+            <div className="input-group-prepend">
+              <span className="input-group-text" id="addon-wrapping">
+                <FaLock />
+              </span>
+            </div>
+            <input
+              type="text"
+              className="form-control"
+              value={password}
+              placeholder="Password"
+              aria-label="Password"
+              aria-describedby="addon-wrapping"
+              onChange={e => this.createPassword(e)}
+            />
+            {password ? (
+              isValidPassword ? (
+                <span style={{ color: "blue" }}>
+                  사용가능한 password입니다.
+                </span>
               ) : (
-                <span style={{ color: "red" }}>유효하지 않은 email입니다.</span>
+                <span style={{ color: "red" }}>
+                  8~10자의 영문/숫자 조합을 사용해주세요
+                </span>
               )
             ) : null}
           </div>
-        </div>
 
-        <div className="input-group flex-nowrap">
-          <div className="input-group-prepend">
-            <span className="input-group-text" id="addon-wrapping">
-              @
-            </span>
-          </div>
-          <input
-            type="text"
-            className="form-control"
-            value={password}
-            placeholder="Password"
-            aria-label="Password"
-            aria-describedby="addon-wrapping"
-            onChange={e => this.createPassword(e)}
-          />
-          {password ? (
-            isValidPassword ? (
-              <span style={{ color: "blue" }}>사용가능한 password입니다.</span>
-            ) : (
-              <span style={{ color: "red" }}>
-                8~10자의 영문/숫자 조합을 사용해주세요
+          <div className="input-group flex-nowrap">
+            <div className="input-group-prepend">
+              <span className="input-group-text" id="addon-wrapping">
+                <FaCheckDouble />
               </span>
-            )
-          ) : null}
-        </div>
-
-        <div className="input-group flex-nowrap">
-          <div className="input-group-prepend">
-            <span className="input-group-text" id="addon-wrapping">
-              @
-            </span>
+            </div>
+            <input
+              type="text"
+              className="form-control"
+              value={passwordCheck}
+              placeholder="Confirm Password"
+              aria-label="Confirm Password"
+              aria-describedby="addon-wrapping"
+              onChange={e => this.repeatPassword(e)}
+            />
+            {passwordCheck ? (
+              isMatchPassword ? (
+                <span style={{ color: "blue" }}>비밀번호 확인완료</span>
+              ) : (
+                <span style={{ color: "red" }}>
+                  비밀번호가 일치하지 않습니다.
+                </span>
+              )
+            ) : null}
           </div>
-          <input
-            type="text"
-            className="form-control"
-            value={passwordCheck}
-            placeholder="Confirm Password"
-            aria-label="Confirm Password"
-            aria-describedby="addon-wrapping"
-            onChange={e => this.repeatPassword(e)}
-          />
-          {passwordCheck ? (
-            isMatchPassword ? (
-              <span style={{ color: "blue" }}>비밀번호 확인완료</span>
-            ) : (
-              <span style={{ color: "red" }}>
-                비밀번호가 일치하지 않습니다.
-              </span>
-            )
-          ) : null}
         </div>
 
         <button

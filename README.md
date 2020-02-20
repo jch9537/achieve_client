@@ -3,6 +3,7 @@
 3. husky
 4. lint-staged
 5. react-router-dom
+6. react-icons
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

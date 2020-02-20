@@ -18,7 +18,7 @@ class Main extends Component {
   };
 
   enterSubmitNewBoard = () => {
-    const { newBoard } = this.state;
+    const { newBoard: newBoard } = this.state;
 
     if (!newBoard) {
       // alert("생성할 board의 이름을 적어주세요");
@@ -39,7 +39,7 @@ class Main extends Component {
   };
 
   clickSubmitNewBoard = () => {
-    const { newBoard } = this.state;
+    const { newBoard: newBoard } = this.state;
 
     if (!newBoard) {
       // alert("생성할 board의 이름을 적어주세요");
@@ -82,7 +82,7 @@ class Main extends Component {
   }
 
   render() {
-    const { boards, newBoard } = this.state;
+    const { boards, newBoard: newBoard } = this.state;
     console.log("메인스테이트", this.state);
     console.log("메인프롭스", this.props);
 
