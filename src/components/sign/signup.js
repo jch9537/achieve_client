@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import {
   FaUserCircle,
   FaLock,
-  FaCheckCircle,
   FaCheckDouble,
-  FaUserCheck
+  FaUserCheck,
+  FaGoogle
 } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 
@@ -76,7 +76,7 @@ class SignUp extends Component {
   createPassword = e => {
     // console.log("사인업 비밀번호: ", e.target.value);
     let __password = e.target.value;
-    if (!isEmail(__password)) {
+    if (!isPassword(__password)) {
     }
     this.setState({ password: __password });
     this.checkValidPassword();
@@ -237,7 +237,7 @@ class SignUp extends Component {
                 </span>
               ) : (
                 <span style={{ color: "red" }}>
-                  8~10자의 영문/숫자 조합을 사용해주세요
+                  8~12자의 영문/숫자 조합을 사용해주세요
                 </span>
               )
             ) : null}
@@ -268,6 +268,12 @@ class SignUp extends Component {
               )
             ) : null}
           </div>
+          <a href="http://localhost:8000/auth/google">
+            <button type="button" className="btn btn-secondary">
+              <FaGoogle />
+              <span> SignUp with Google</span>
+            </button>
+          </a>
         </div>
 
         <button

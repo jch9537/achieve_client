@@ -56,11 +56,7 @@ class Home extends Component {
             </button>
           </div>
         </div>
-        {this.state.signInOrUp ? (
-          <SignIn />
-        ) : (
-          <SignUp handleToggle={this.toggleSignInOrUp} />
-        )}
+        {this.state.signInOrUp ? <SignIn /> : <SignUp />}
       </div>
     );
   }

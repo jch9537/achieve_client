@@ -9,7 +9,7 @@ const SignOut = props => {
   } else {
     return (
       <div>
-        <button onClick={implementSignOut}>SignOut</button>
+        <button onClick={implementSignOut}>Log Out</button>
       </div>
     );
   }

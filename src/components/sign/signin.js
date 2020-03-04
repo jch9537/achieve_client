@@ -1,11 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import {
-  FaUserCircle,
-  FaLock,
-  FaCheckDouble,
-  FaUserCheck
-} from "react-icons/fa";
+import { FaLock, FaGoogle } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 
 import api from "../../util/api";
@@ -110,6 +105,12 @@ class SignIn extends Component {
               onChange={e => this.writePassword(e)}
             />
           </div>
+          <a href="http://localhost:8000/auth/google">
+            <button type="button" className="btn btn-secondary">
+              <FaGoogle />
+              <span> LogIn with Google</span>
+            </button>
+          </a>
           <button
             type="button"
             className="btn btn-primary btn btn-block"
