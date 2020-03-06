@@ -4,7 +4,9 @@ import {
   FaLock,
   FaCheckDouble,
   FaUserCheck,
-  FaGoogle
+  FaGoogle,
+  FaAngleDoubleRight,
+  FaArrowRight
 } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 
@@ -72,6 +74,49 @@ class SignUp extends Component {
         });
     }
   };
+  //유효한 Email 확인 후 렌더
+  renderDuplicatedEmail = () => {
+    if (this.state.email) {
+      if (this.state.isValidEmail) {
+        return (
+          <div className="input-group-append">
+            <span
+              className="input-group-text"
+              id="basic-addon2"
+              style={{
+                color: "#fff",
+                backgroundColor: "#28a745",
+                borderColor: "#ced4d",
+                borderRadius: 0
+              }}
+            >
+              사용가능한 Email입니다. Email 중복확인
+              <FaAngleDoubleRight style={{ marginLeft: 5 }} />
+            </span>
+          </div>
+        );
+      } else {
+        return (
+          <div className="input-group-append">
+            <span
+              className="input-group-text"
+              id="basic-addon2"
+              style={{
+                color: "#212529",
+                backgroundColor: "#ffc107",
+                borderColor: "#ced4d",
+                borderRadius: 0
+              }}
+            >
+              유효하지 않은 Email입니다.
+            </span>
+          </div>
+        );
+      }
+    } else {
+      return null;
+    }
+  };
 
   createPassword = e => {
     // console.log("사인업 비밀번호: ", e.target.value);
@@ -81,7 +126,7 @@ class SignUp extends Component {
     this.setState({ password: __password });
     this.checkValidPassword();
   };
-
+  //비밀번호 유효성확인
   checkValidPassword = () => {
     let timer;
     if (timer) {
@@ -95,12 +140,64 @@ class SignUp extends Component {
       }
     }, 500);
   };
+  //비밀번호 유효성 여부 렌더
+  renderValidPassword = () => {
+    if (this.state.password) {
+      if (this.state.isValidPassword) {
+        return (
+          <div className="input-group-append">
+            <span
+              className="input-group-text"
+              id="basic-addon2"
+              style={{
+                color: "#fff",
+                backgroundColor: "#28a745",
+                borderColor: "#ced4d",
+                borderRadius: 0
+              }}
+            >
+              사용가능한 password입니다
+            </span>
+          </div>
+        );
+      } else {
+        return (
+          <div className="input-group-append">
+            <span
+              className="input-group-text"
+              id="basic-addon2"
+              style={{
+                color: "#212529",
+                backgroundColor: "#ffc107",
+                borderColor: "#ced4d",
+                borderRadius: 0
+              }}
+            >
+              8~12자의 영문/숫자 조합을 사용해주세요
+            </span>
+          </div>
+        );
+      }
+    } else {
+      return null;
+    }
+  };
 
   // 비번확인 함수만들기
   repeatPassword = e => {
-    let __passwordCheck = e.target.value;
-    this.setState({ passwordCheck: __passwordCheck });
-    this.checkMatchPassword();
+    if (this.state.password) {
+      if (this.state.isValidPassword) {
+        let __passwordCheck = e.target.value;
+        this.setState({ passwordCheck: __passwordCheck });
+        this.checkMatchPassword();
+      } else {
+        alert("작성한 비밀번호가 유효하지 않습니다.");
+        this.setState({ password: "", passwordCheck: "" });
+      }
+    } else {
+      alert("비밀번호 입력 후 작성해주세요");
+      this.setState({ passwordCheck: "" });
+    }
   };
 
   checkMatchPassword = () => {
@@ -115,6 +212,48 @@ class SignUp extends Component {
         this.setState({ isMatchPassword: false });
       }
     }, 500);
+  };
+
+  renderMatchPassword = () => {
+    if (this.state.passwordCheck) {
+      if (this.state.isMatchPassword) {
+        return (
+          <div className="input-group-append">
+            <span
+              className="input-group-text"
+              id="basic-addon2"
+              style={{
+                color: "#fff",
+                backgroundColor: "#28a745",
+                borderColor: "#ced4d",
+                borderRadius: 0
+              }}
+            >
+              비밀번호 확인완료
+            </span>
+          </div>
+        );
+      } else {
+        return (
+          <div className="input-group-append">
+            <span
+              className="input-group-text"
+              id="basic-addon2"
+              style={{
+                color: "#212529",
+                backgroundColor: "#ffc107",
+                borderColor: "#ced4d",
+                borderRadius: 0
+              }}
+            >
+              비밀번호가 일치하지 않습니다.
+            </span>
+          </div>
+        );
+      }
+    } else {
+      return null;
+    }
   };
 
   submitSignUp = () => {
@@ -143,19 +282,12 @@ class SignUp extends Component {
   };
 
   render() {
-    const {
-      email,
-      isValidEmail,
-      password,
-      isValidPassword,
-      passwordCheck,
-      isMatchPassword
-    } = this.state;
+    const { email, password, passwordCheck } = this.state;
     console.log("사인업 스테이트", this.state);
     // console.log("사인업 프롭", this.props);
 
     return (
-      <div style={{ backgroundColor: "beige", padding: 10 }}>
+      <div style={{ backgroundColor: "beige", padding: 30, width: "60%" }}>
         <h2>SignUp</h2>
         <div id="signup-input-container" style={{ marginBottom: "15" }}>
           <div className="input-group flex-nowrap">
@@ -190,28 +322,21 @@ class SignUp extends Component {
               onChange={e => this.createEmail(e)}
             />
             <div className="input-group-append">
+              {this.renderDuplicatedEmail()}
               <button
-                className="btn btn-outline-secondary"
+                className="btn btn-secondary"
                 type="button"
-                id="button-addon2"
+                id="button-addon4"
                 onClick={this.checkDuplicateEmail}
+                style={{ borderColor: "#ced4d" }}
               >
                 <FaUserCheck
                   size="22"
-                  color="red"
+                  color="white"
                   style={{ marginRight: "10" }}
                 />
                 Check Duplicate
               </button>
-              {email ? (
-                isValidEmail ? (
-                  <span style={{ color: "blue" }}>사용가능한 email입니다.</span>
-                ) : (
-                  <span style={{ color: "red" }}>
-                    유효하지 않은 email입니다.
-                  </span>
-                )
-              ) : null}
             </div>
           </div>
 
@@ -222,7 +347,7 @@ class SignUp extends Component {
               </span>
             </div>
             <input
-              type="text"
+              type="password"
               className="form-control"
               value={password}
               placeholder="Password"
@@ -230,17 +355,7 @@ class SignUp extends Component {
               aria-describedby="addon-wrapping"
               onChange={e => this.createPassword(e)}
             />
-            {password ? (
-              isValidPassword ? (
-                <span style={{ color: "blue" }}>
-                  사용가능한 password입니다.
-                </span>
-              ) : (
-                <span style={{ color: "red" }}>
-                  8~12자의 영문/숫자 조합을 사용해주세요
-                </span>
-              )
-            ) : null}
+            {this.renderValidPassword()}
           </div>
 
           <div className="input-group flex-nowrap">
@@ -250,7 +365,7 @@ class SignUp extends Component {
               </span>
             </div>
             <input
-              type="text"
+              type="password"
               className="form-control"
               value={passwordCheck}
               placeholder="Confirm Password"
@@ -258,15 +373,7 @@ class SignUp extends Component {
               aria-describedby="addon-wrapping"
               onChange={e => this.repeatPassword(e)}
             />
-            {passwordCheck ? (
-              isMatchPassword ? (
-                <span style={{ color: "blue" }}>비밀번호 확인완료</span>
-              ) : (
-                <span style={{ color: "red" }}>
-                  비밀번호가 일치하지 않습니다.
-                </span>
-              )
-            ) : null}
+            {this.renderMatchPassword()}
           </div>
           <a href="http://localhost:8000/auth/google">
             <button type="button" className="btn btn-secondary">

@@ -16,8 +16,16 @@ class Home extends Component {
     console.log("홈 스테이트: ", this.state);
     console.log("홈 프롭: ", this.props);
     return (
-      <div style={{ backgroundColor: "pink" }}>
-        <div>
+      <div
+        style={
+          {
+            // backgroundColor: "pink"
+            // justifyContent: "center",
+            // alignContent: "center"
+          }
+        }
+      >
+        <div style={{ height: "50%" }}>
           <div className="jumbotron">
             <h1 className="display-5">ACHIEVEMENT</h1>
             <p className="lead">
@@ -35,28 +43,30 @@ class Home extends Component {
               <br />
             </p>
           </div>
-          <div className="btn-group" role="group" aria-label="Basic example">
-            <button
-              type="button"
-              className="btn btn-secondary"
-              data-toggle="button"
-              onClick={this.toggleSignInOrUp}
-              disabled={this.state.signInOrUp ? null : "disabled"}
-            >
-              Go! SignUp
-            </button>
-            <button
-              type="button"
-              className="btn btn-secondary"
-              data-toggle="button"
-              onClick={this.toggleSignInOrUp}
-              disabled={!this.state.signInOrUp ? null : "disabled"}
-            >
-              Go! SignIn
-            </button>
+          <div style={{ height: "50%", backgroundColor: "pink" }}>
+            <div className="btn-group" role="group" aria-label="Basic example">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-toggle="button"
+                onClick={this.toggleSignInOrUp}
+                disabled={this.state.signInOrUp ? null : "disabled"}
+              >
+                Go! SignUp
+              </button>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-toggle="button"
+                onClick={this.toggleSignInOrUp}
+                disabled={!this.state.signInOrUp ? null : "disabled"}
+              >
+                Go! SignIn
+              </button>
+            </div>
+            {this.state.signInOrUp ? <SignIn /> : <SignUp />}
           </div>
         </div>
-        {this.state.signInOrUp ? <SignIn /> : <SignUp />}
       </div>
     );
   }

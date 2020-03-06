@@ -8,9 +8,11 @@ const SignOut = props => {
     return <Redirect to="/" />;
   } else {
     return (
-      <div>
-        <button onClick={implementSignOut}>Log Out</button>
-      </div>
+      <React.Fragment>
+        <span onClick={implementSignOut} style={{ color: "#3d83fa" }}>
+          Log Out
+        </span>
+      </React.Fragment>
     );
   }
 };

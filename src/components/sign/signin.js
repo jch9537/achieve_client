@@ -72,7 +72,7 @@ class SignIn extends Component {
       return <Redirect to={`/${userId}/main`} />;
     } else {
       return (
-        <div style={{ backgroundColor: "beige", padding: 10 }}>
+        <div style={{ backgroundColor: "beige", padding: 30, width: "60%" }}>
           <h2>SignIn</h2>
           <div className="input-group flex-nowrap">
             <div className="input-group-prepend">
